@@ -1,0 +1,206 @@
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+@function strip-unit($value) {
+    @if type-of($value) == "number" and not unitless($value) {
+        @return $value / ($value * 0 + 1);
+    }
+
+    @return $value;
+}
+
+@mixin fluid-font-size($min-vw, $max-vw, $min-font-size, $max-font-size) {
+    $u1: unit($min-vw);
+    $u2: unit($max-vw);
+    $u3: unit($min-font-size);
+    $u4: unit($max-font-size);
+
+    @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+        font-size: $min-font-size;
+        @media (min-width: $min-vw) {
+            font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+        }
+        @media (min-width: $max-vw) {
+            font-size: $max-font-size;
+        }
+    }
+}
+
+@mixin setup-ratio($width, $height-max, $width-ratio, $height-ratio) {
+    width: $width;
+    height: calc(#{$height-ratio} / #{$width-ratio} * #{$width});
+    max-width: calc(#{$width-ratio} / #{$height-ratio} * #{$height-max});
+    max-height: $height-max;
+
+    @media only screen and (orientation: landscape) {
+        height: calc(#{$width-ratio} / #{$height-ratio} * #{$width});
+        max-width: calc(#{$height-ratio} / #{$width-ratio} * #{$height-max});
+    }
+}
+
+$min-vw: 576px;
+$max-vw: 1200px;
+$min-font-size: 16px;
+$max-font-size: 24px;
+
+$card-index: container, flipper, back, front;
+
+html {
+    @include fluid-font-size($min-vw, $max-vw, $min-font-size, $max-font-size);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: seagreen;
+}
+
+#container {
+    @include setup-ratio(70vw, 70vh, 53.98, 85.6);
+
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    perspective: 50rem;
+
+    &.flipped > #flipper {
+        transform: rotateY(180deg);
+    }
+}
+
+#flipper {
+    width: 100%;
+    height: 100%;
+
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+#card-front {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: index($card-index, front);
+    backface-visibility: hidden;
+
+    background-color: hotpink;
+
+    display: grid;
+    grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+    grid-template-areas:
+    "... ... avt avt avt avt avt avt ... ..."
+    "... ... avt avt avt avt avt avt ... ..."
+    "... ... avt avt avt avt avt avt ... ..."
+    "... ... avt avt avt avt avt avt ... ..."
+    "int int int int int int int int int int"
+    "int int int int int int int int int int"
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "con con con con con con con con con con"
+    "con con con con con con con con con con";
+
+    transform: rotateY(0deg);
+}
+
+#card-back {
+    width: 100%;
+    height: 100%;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: index($card-index, back);
+    backface-visibility: hidden;
+
+    background-color: hotpink;
+
+    display: grid;
+    grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+    grid-template-areas:
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ...";
+
+    transform: rotateY(180deg);
+}
+
+#avatar {
+    grid-area: avt;
+    background-color: steelblue;
+
+    > svg {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+#introduction {
+    grid-area: int;
+    background-color: black;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    > #name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 0.25rem;
+    }
+}
+
+#contact {
+    grid-area: con;
+    background-color: steelblue;
+    color: white;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.social {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 0.25rem;
+
+    border-radius: 50%;
+    border: 0.1rem solid white;
+
+    text-align: center;
+    color: white;
+
+    > i {
+        font-size: 1.25rem;
+        padding-top: 0.625rem;
+    }
+}
+
+.copyright {
+    font-size: 0.8rem;
+    white-space: nowrap;
+
+    position: fixed;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+
+    color: black;
+}
