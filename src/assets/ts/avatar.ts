@@ -1,18 +1,10 @@
 import * as Snap from "snapsvg/dist/snap.svg-min.js";
 import * as vrAvatar from "../images/VRAvatar.svg";
 
-interface Drawing {
-    snapObj: any;
-    startX: number;
-    startY: number;
-}
-interface SnapEllipse extends Drawing {
-    width: number;
-    height: number;
-}
-interface SnapCircle extends Drawing {
-    radius: number;
-}
+interface Drawing { snapObj: any; startX: number; startY: number; }
+interface SnapEllipse extends Drawing { width: number; height: number; }
+interface SnapCircle extends Drawing { radius: number; }
+
 let customDrawings: { eyeL: SnapEllipse, eyeR: SnapEllipse, clipperL: SnapEllipse, clipperR: SnapEllipse, pupilL: SnapCircle, pupilR: SnapCircle };
 let colors, startTime: number;
 

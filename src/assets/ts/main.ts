@@ -2,11 +2,15 @@
 
 import "../scss/main.scss";
 import loadAvatar from "./avatar";
+import { initSkills, loadSkills, clearSkills } from "./skills";
+import loadPortfolio from "./portfolio";
 
 let container;
 
 function main(): void {
     loadAvatar();
+    loadPortfolio();
+    initSkills();
 
     loadElements();
     loadListeners();
@@ -23,8 +27,10 @@ function loadListeners(): void {
 function conClicked(): void {
     if (!container.classList.contains("flipped")) {
         container.classList.toggle("flipped", true);
+        loadSkills();
     } else {
         container.classList.toggle("flipped", false);
+        clearSkills();
     }
 }
 
