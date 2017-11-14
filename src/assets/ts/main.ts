@@ -6,6 +6,7 @@ import { initSkills, loadSkills, clearSkills } from "./skills";
 import loadPortfolio from "./portfolio";
 
 let container;
+let links;
 
 function main(): void {
     loadAvatar();
@@ -18,10 +19,14 @@ function main(): void {
 
 function loadElements(): void {
     container = document.getElementById("container");
+    links = document.querySelectorAll("a");
 }
 
 function loadListeners(): void {
     container.addEventListener("click", conClicked);
+    links.forEach(element => {
+        element.addEventListener("click", e => { e.stopPropagation(); });
+    });
 }
 
 function conClicked(): void {

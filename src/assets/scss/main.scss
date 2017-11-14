@@ -45,7 +45,7 @@ $max-font-size: 24px;
 
 $card-index: container, flipper, back, front;
 $card-colors: #212121, #2196F3, #F5F5F5;
-$shadow-colors: #263238;
+$shadow-colors: #263238, #424242;
 $background-colors: #FFC107, rgba(245, 124, 0, 0.5);
 
 html {
@@ -128,7 +128,22 @@ body {
     "con con con con con con con con con con"
     "... ... ... ... ... ... ... ... ... ...";
 
-    transform: rotateY(0deg);  
+    transform: rotateY(0deg);
+
+    @media only screen and (orientation: landscape) {
+    grid-template: repeat(10, 1fr) / repeat(16, 1fr);
+    grid-template-areas:
+    "lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt"
+    "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ..."
+    "... avt avt avt avt avt avt ... ... ... ... ... ... ... ... ..."
+    "... avt avt avt avt avt avt ... int int int int int int int int"
+    "... avt avt avt avt avt avt ... int int int int int int int int"
+    "... avt avt avt avt avt avt ... con con con con con con con con"
+    "... avt avt avt avt avt avt ... con con con con con con con con"
+    "... avt avt avt avt avt avt ... ... ... ... ... ... ... ... ..."
+    "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ..."
+    "lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb";
+    }
 }
 
 #card-back {
@@ -157,19 +172,24 @@ body {
     "skl skl skl skl skl skl skl skl skl skl"
     "skl skl skl skl skl skl skl skl skl skl"
     "skl skl skl skl skl skl skl skl skl skl"
-    "div div div div div div div div div div"
-    "div div div div div div div div div div"
-    "div div div div div div div div div div"
-    "div div div div div div div div div div"
+    "skm skm skm skm skm skm skm skm skm skm"
+    "skm skm skm skm skm skm skm skm skm skm"
+    "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
+    "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
     "prt prt prt prt prt prt prt prt prt prt"
     "prt prt prt prt prt prt prt prt prt prt"
     "prt prt prt prt prt prt prt prt prt prt"
     "prt prt prt prt prt prt prt prt prt prt"
     "prt prt prt prt prt prt prt prt prt prt"
     "prt prt prt prt prt prt prt prt prt prt"
-    "pmo pmo pmo pmo pmo pmo pmo pmo pmo pmo";
+    "... ... ... ... ... ... ... pmo pmo pmo";
 
     transform: rotateY(180deg);
+
+    @media only screen and (orientation: landscape) {
+        grid-template: repeat(10, 1fr) / repeat(16, 1fr);
+        grid-template-areas: "";
+    }
 }
 
 #avatar {
@@ -195,10 +215,18 @@ body {
         font-size: 1.25rem;
         font-weight: 800;
         text-transform: uppercase;
+
+        @media only screen and (orientation: landscape) {
+            font-size: 1.75rem;
+        }
     }
 
     > #title {
         font-weight: 600;
+    }
+
+    @media only screen and (orientation: landscape) {
+        background-color: transparent;
     }
 }
 
@@ -212,6 +240,21 @@ body {
     align-items: center;
 }
 
+#line-top {
+    grid-area: lnt;
+
+    height: 50%;
+    background-color: nth($card-colors, 2);
+}
+
+#line-bottom {
+    grid-area: lnb;
+    align-self: end;
+    
+    height: 50%;
+    background-color: nth($card-colors, 2);
+}
+
 #skills {
     grid-area: skl;
 
@@ -219,10 +262,17 @@ body {
         width: 100%;
         height: 100%;
 
+        > .skills-chart-container {
+            fill: none;
+            stroke: nth($shadow-colors, 2);
+            stroke-width: 0.1rem;
+        }
+
         > .skills-chart {
             fill: none;
-            stroke: nth($card-colors, 3);
+            stroke: nth($card-colors, 2);
             stroke-width: 0.1rem;
+            stroke-linecap: round;
         }
 
         > .skills-info {
@@ -237,37 +287,34 @@ body {
     }
 }
 
-#divider {
-    grid-area: div;
+#skills-more {
+    grid-area: skm;
+
+    margin: 0 0.7rem;
     color: nth($card-colors, 3);
 
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+
+    > .skills-more-item {
+        margin: 0 0.3rem;
+    }
+}
+
+#portfolio-title {
+    grid-area: ptl;
+
+    font-size: 2rem;
+    color: nth($card-colors, 3);
+    border-top: 0.5rem solid nth($card-colors, 2);
+
+    display: flex;
     flex-direction: column;
-    justify-content: space-around;
-
-    #skills-more {
-        margin: 0 0.7rem;
-
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-
-        > .skills-more-item {
-            margin: 0 0.3rem;
-        }
-    }
-
-    #div-line {
-        width: 100%;
-        height: 0.75rem;
-        background-color: nth($card-colors, 2);
-    }
-
-    #portfolio-title {
-        font-size: 2rem;
-        text-align: center;
-    }
+    justify-content: center;
+    align-items: center;
 }
 
 #portfolio {
@@ -349,6 +396,14 @@ body {
         text-decoration: none;
         color: nth($card-colors, 3);
     }
+}
+
+#divider {
+    grid-area: div;
+
+    width: 100%;
+    height: 0.5rem;
+    background-color: nth($card-colors, 2);
 }
 
 .social {
