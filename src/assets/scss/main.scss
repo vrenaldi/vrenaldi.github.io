@@ -40,7 +40,7 @@ $fa-font-path: "~font-awesome/fonts";
 
 $min-vw: 576px;
 $max-vw: 1200px;
-$min-font-size: 16px;
+$min-font-size: 12px;
 $max-font-size: 24px;
 
 $card-index: container, flipper, back, front;
@@ -50,7 +50,9 @@ $background-colors: #FFC107, rgba(245, 124, 0, 0.5);
 
 html {
     @include fluid-font-size($min-vw, $max-vw, $min-font-size, $max-font-size);
-    font-family: "Rancho", cursive;
+    font-family: "Roboto Mono", Courier New, Courier, monospace;
+    font-family: Courier New, Courier;
+    font-family: monospace;
 }
 
 body {
@@ -182,13 +184,23 @@ body {
     "prt prt prt prt prt prt prt prt prt prt"
     "prt prt prt prt prt prt prt prt prt prt"
     "prt prt prt prt prt prt prt prt prt prt"
-    "... ... ... ... ... ... ... pmo pmo pmo";
-
+    "... ... ... ... ... pmo pmo pmo pmo pmo";
+    
     transform: rotateY(180deg);
 
     @media only screen and (orientation: landscape) {
         grid-template: repeat(10, 1fr) / repeat(16, 1fr);
-        grid-template-areas: "";
+        grid-template-areas:
+        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
+        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
+        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
+        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
+        "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
+        "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
+        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
+        "... ... ... ... ... ... ... ... ... ... ... ... pmo pmo pmo pmo";
     }
 }
 
@@ -216,7 +228,7 @@ body {
         font-weight: 800;
         text-transform: uppercase;
 
-        @media only screen and (orientation: landscape) {
+        @media only screen and (min-width: 768px) and (orientation: landscape) {
             font-size: 1.75rem;
         }
     }
@@ -243,7 +255,7 @@ body {
 #line-top {
     grid-area: lnt;
 
-    height: 50%;
+    height: 100%;
     background-color: nth($card-colors, 2);
 }
 
@@ -251,7 +263,7 @@ body {
     grid-area: lnb;
     align-self: end;
     
-    height: 50%;
+    height: 100%;
     background-color: nth($card-colors, 2);
 }
 
@@ -282,6 +294,7 @@ body {
 
         > .skills-title {
             font-size: 0.5rem;
+            font-weight: 700;
             fill: nth($card-colors, 3);
         }
     }
@@ -307,7 +320,8 @@ body {
 #portfolio-title {
     grid-area: ptl;
 
-    font-size: 2rem;
+    font-size: 1.5rem;
+    text-transform: uppercase;
     color: nth($card-colors, 3);
     border-top: 0.5rem solid nth($card-colors, 2);
 
@@ -361,9 +375,9 @@ body {
                 margin-left: 0.5rem;
                 margin-right: 0.3rem;
 
-                &:first-child {
-                    margin-left: 0;
-                }
+                // &:first-child {
+                //     margin-left: 0;
+                // }
             }
 
             > .links > a {
@@ -384,6 +398,26 @@ body {
             }
         }
     }
+
+    @media only screen and (orientation: landscape) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        > .portfolio-item {
+            height: 50%;
+
+            > img {
+                width: auto;
+                height: 80%;
+            }
+
+            &:last-child {
+                align-self: flex-start;
+                width: 100%;
+            }
+        }
+    }
 }
 
 #portfolio-more {
@@ -401,9 +435,10 @@ body {
 #divider {
     grid-area: div;
 
-    width: 100%;
-    height: 0.5rem;
-    background-color: nth($card-colors, 2);
+    width: 0.5rem;
+    height: 100%;
+    // background-color: nth($card-colors, 2);
+    background-color: transparent;
 }
 
 .social {
