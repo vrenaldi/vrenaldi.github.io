@@ -1,6 +1,16 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
 
+$min-vp: 20px;
+$max-vp: 1200px;
+$min-font-size: 5px;
+$max-font-size: 45px;
+
+$card-index: container, flipper, back, front;
+$card-colors: #212121, #2196F3, #F5F5F5;
+$shadow-colors: #263238, #424242;
+$background-colors: #FFC107, rgba(245, 124, 0, 0.5);
+
 @function strip-unit($value) {
     @if type-of($value) == "number" and not unitless($value) {
         @return $value / ($value * 0 + 1);
@@ -9,19 +19,28 @@ $fa-font-path: "~font-awesome/fonts";
     @return $value;
 }
 
-@mixin fluid-font-size($min-vw, $max-vw, $min-font-size, $max-font-size) {
-    $u1: unit($min-vw);
-    $u2: unit($max-vw);
+@mixin fluid-font-size($min-vp, $max-vp, $min-font-size, $max-font-size) {
+    $u1: unit($min-vp);
+    $u2: unit($max-vp);
     $u3: unit($min-font-size);
     $u4: unit($max-font-size);
 
     @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
         font-size: $min-font-size;
-        @media (min-width: $min-vw) {
-            font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+        @media (min-width: $min-vp) {
+            font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((80vw - #{$min-vp}) / #{strip-unit($max-vp - $min-vp)}));
         }
-        @media (min-width: $max-vw) {
+        @media (min-width: $max-vp) {
             font-size: $max-font-size;
+        }
+
+        @media only screen and (orientation: landscape) {
+            @media (min-height: $min-vp) {
+                font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((80vh - #{$min-vp}) / #{strip-unit($max-vp - $min-vp)}));
+            }
+            @media (min-height: $max-vp) {
+                font-size: $max-font-size;
+            }
         }
     }
 }
@@ -38,21 +57,14 @@ $fa-font-path: "~font-awesome/fonts";
     }
 }
 
-$min-vw: 576px;
-$max-vw: 1200px;
-$min-font-size: 12px;
-$max-font-size: 24px;
-
-$card-index: container, flipper, back, front;
-$card-colors: #212121, #2196F3, #F5F5F5;
-$shadow-colors: #263238, #424242;
-$background-colors: #FFC107, rgba(245, 124, 0, 0.5);
+@import "./portrait.scss";
+@import "./landscape.scss";
 
 html {
-    @include fluid-font-size($min-vw, $max-vw, $min-font-size, $max-font-size);
-    font-family: "Roboto Mono", Courier New, Courier, monospace;
-    font-family: Courier New, Courier;
+    @include fluid-font-size($min-vp, $max-vp, $min-font-size, $max-font-size);
     font-family: monospace;
+    font-family: Courier New, Courier;
+    font-family: "Roboto Mono", Courier New, Courier, monospace;
 }
 
 body {
@@ -92,14 +104,14 @@ body {
     transition: transform 0.6s;
 }
 
-#card-front {
+#card-front, #card-back {
     width: 100%;
     height: 100%;
 
     position: absolute;
     top: 0;
     left: 0;
-    z-index: index($card-index, front);
+
     backface-visibility: hidden;
 
     background-color: nth($card-colors, 1);
@@ -109,99 +121,18 @@ body {
     &:hover {
         box-shadow: 0 1rem 2rem nth($shadow-colors, 1);
     }
-
+    
     display: grid;
-    grid-template: repeat(16, 1fr) / repeat(10, 1fr);
-    grid-template-areas:
-    "... ... ... ... ... ... ... ... ... ..."
-    "... avt avt avt avt avt avt avt avt ..."
-    "... avt avt avt avt avt avt avt avt ..."
-    "... avt avt avt avt avt avt avt avt ..."
-    "... avt avt avt avt avt avt avt avt ..."
-    "... avt avt avt avt avt avt avt avt ..."
-    "... avt avt avt avt avt avt avt avt ..."
-    "... avt avt avt avt avt avt avt avt ..."
-    "... ... ... ... ... ... ... ... ... ..."
-    "int int int int int int int int int int"
-    "int int int int int int int int int int"
-    "... ... ... ... ... ... ... ... ... ..."
-    "con con con con con con con con con con"
-    "con con con con con con con con con con"
-    "con con con con con con con con con con"
-    "... ... ... ... ... ... ... ... ... ...";
+}
 
+#card-front {
+    z-index: index($card-index, front);
     transform: rotateY(0deg);
-
-    @media only screen and (orientation: landscape) {
-    grid-template: repeat(10, 1fr) / repeat(16, 1fr);
-    grid-template-areas:
-    "lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt"
-    "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ..."
-    "... avt avt avt avt avt avt ... ... ... ... ... ... ... ... ..."
-    "... avt avt avt avt avt avt ... int int int int int int int int"
-    "... avt avt avt avt avt avt ... int int int int int int int int"
-    "... avt avt avt avt avt avt ... con con con con con con con con"
-    "... avt avt avt avt avt avt ... con con con con con con con con"
-    "... avt avt avt avt avt avt ... ... ... ... ... ... ... ... ..."
-    "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ..."
-    "lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb";
-    }
 }
 
 #card-back {
-    width: 100%;
-    height: 100%;
-    
-    position: absolute;
-    top: 0;
-    left: 0;
     z-index: index($card-index, back);
-    backface-visibility: hidden;
-
-    background-color: nth($card-colors, 1);
-    box-shadow: 0 0.5rem 1rem nth($shadow-colors, 1);
-    transition: box-shadow 0.3s ease;
-
-    &:hover {
-        box-shadow: 0 1rem 2rem nth($shadow-colors, 1);
-    }
-
-    display: grid;
-    grid-template: repeat(16, 1fr) / repeat(10, 1fr);
-    grid-template-areas:
-    "skl skl skl skl skl skl skl skl skl skl"
-    "skl skl skl skl skl skl skl skl skl skl"
-    "skl skl skl skl skl skl skl skl skl skl"
-    "skl skl skl skl skl skl skl skl skl skl"
-    "skl skl skl skl skl skl skl skl skl skl"
-    "skm skm skm skm skm skm skm skm skm skm"
-    "skm skm skm skm skm skm skm skm skm skm"
-    "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
-    "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
-    "prt prt prt prt prt prt prt prt prt prt"
-    "prt prt prt prt prt prt prt prt prt prt"
-    "prt prt prt prt prt prt prt prt prt prt"
-    "prt prt prt prt prt prt prt prt prt prt"
-    "prt prt prt prt prt prt prt prt prt prt"
-    "prt prt prt prt prt prt prt prt prt prt"
-    "... ... ... ... ... pmo pmo pmo pmo pmo";
-    
     transform: rotateY(180deg);
-
-    @media only screen and (orientation: landscape) {
-        grid-template: repeat(10, 1fr) / repeat(16, 1fr);
-        grid-template-areas:
-        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
-        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
-        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
-        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
-        "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
-        "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
-        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
-        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
-        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
-        "... ... ... ... ... ... ... ... ... ... ... ... pmo pmo pmo pmo";
-    }
 }
 
 #avatar {
@@ -215,7 +146,6 @@ body {
 
 #introduction {
     grid-area: int;
-    background-color: nth($card-colors, 2);
     color: nth($card-colors, 3);
 
     display: flex;
@@ -227,24 +157,15 @@ body {
         font-size: 1.25rem;
         font-weight: 800;
         text-transform: uppercase;
-
-        @media only screen and (min-width: 768px) and (orientation: landscape) {
-            font-size: 1.75rem;
-        }
     }
 
     > #title {
-        font-weight: 600;
-    }
-
-    @media only screen and (orientation: landscape) {
-        background-color: transparent;
+        font-weight: 500;
     }
 }
 
 #contact {
     grid-area: con;
-    color: nth($card-colors, 3);
 
     display: flex;
     flex-direction: row;
@@ -252,50 +173,78 @@ body {
     align-items: center;
 }
 
-#line-top {
-    grid-area: lnt;
-
-    height: 100%;
-    background-color: nth($card-colors, 2);
-}
-
-#line-bottom {
-    grid-area: lnb;
-    align-self: end;
-    
-    height: 100%;
-    background-color: nth($card-colors, 2);
-}
-
 #skills {
     grid-area: skl;
+    position: relative;
 
-    > svg {
-        width: 100%;
-        height: 100%;
+    > #core, > #core-pulse {
+        width: 4.5rem;
+        height: 4.5rem;
 
-        > .skills-chart-container {
-            fill: none;
-            stroke: nth($shadow-colors, 2);
-            stroke-width: 0.1rem;
-        }
+        border: 0.2rem solid nth($card-colors, 2);
+        border-radius: 50%;
+        
+        position: absolute;
+        top: calc(50% - 2.45rem);
+        left: calc(50% - 2.45rem);
+    }
 
-        > .skills-chart {
-            fill: none;
-            stroke: nth($card-colors, 2);
-            stroke-width: 0.1rem;
-            stroke-linecap: round;
-        }
+    > #core {
+        transition: transform 1s 1s ease-in-out;
+    }
+    
+    > #core-pulse {
+        z-index: -1;
+        animation: pulsate 1s ease-in-out infinite;
 
-        > .skills-info {
-            font-size: 0.75rem;
-            fill: nth($card-colors, 3);
-        }
+        transition: visibility 0s 2s;
+    }
 
-        > .skills-title {
-            font-size: 0.5rem;
-            font-weight: 700;
-            fill: nth($card-colors, 3);
+    > [id^=item] {
+        opacity: 0;
+
+        font-size: 2rem;
+        color: nth($card-colors, 3);
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(3rem) translate(-50%, -50%);
+
+        transition: all 1s ease-in-out;
+        transition-property: opacity, transform;
+    }    
+
+    > #core.clicked {
+        transform: translateY(3rem);
+        transition: transform 1s ease-in-out;
+
+        + #core-pulse {
+            visibility: hidden;
+            animation: restart-animation 0s;
+
+            transition: visibility 0s;
+
+            + #item1 {
+                opacity: 1;
+                transform: translateX(-3rem) translateY(3rem) translate(-50%, -50%);
+                transition: all 1s 1s ease-in-out;
+                transition-property: opacity, transform;
+
+                + #item2 {
+                    opacity: 1;
+                    transform: translateX(3rem) translateY(3rem) translate(-50%, -50%);
+                    transition: all 1s 1s ease-in-out;
+                    transition-property: opacity, transform;
+
+                    + #item3 {
+                        opacity: 1;
+                        transform: translateY(-3rem) translateY(3rem) translate(-50%, -50%);
+                        transition: all 1s 1s ease-in-out;
+                        transition-property: opacity, transform;
+                    }
+                }
+            }
         }
     }
 }
@@ -321,7 +270,9 @@ body {
     grid-area: ptl;
 
     font-size: 1.5rem;
+    font-weight: 600;
     text-transform: uppercase;
+
     color: nth($card-colors, 3);
     border-top: 0.5rem solid nth($card-colors, 2);
 
@@ -339,20 +290,17 @@ body {
     justify-content: space-between;
 
     > .portfolio-item {
-        height: 30%;
-
         display: flex;
         flex-direction: row;
+        align-content: center;
         align-items: center;
 
         > img {
             width: auto;
             height: 100%;
 
+            margin: 0 0.5rem;
             border: 0.2rem solid nth($card-colors, 2);
-
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
             border-radius: 50%;
 
             transition: transform 0.3s ease-in-out;
@@ -372,7 +320,6 @@ body {
             }
 
             > .tech > i {
-                margin-left: 0.5rem;
                 margin-right: 0.3rem;
 
                 // &:first-child {
@@ -382,7 +329,6 @@ body {
 
             > .links > a {
                 color: nth($card-colors, 3);
-                margin-right: 0.5rem;
             }
         }
 
@@ -391,30 +337,6 @@ body {
 
             > div.project-details {
                 text-align: right;
-
-                > .links > a:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
-    }
-
-    @media only screen and (orientation: landscape) {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-
-        > .portfolio-item {
-            height: 50%;
-
-            > img {
-                width: auto;
-                height: 80%;
-            }
-
-            &:last-child {
-                align-self: flex-start;
-                width: 100%;
             }
         }
     }
@@ -432,49 +354,67 @@ body {
     }
 }
 
-#divider {
-    grid-area: div;
-
-    width: 0.5rem;
-    height: 100%;
-    // background-color: nth($card-colors, 2);
-    background-color: transparent;
-}
-
 .social {
     width: 3rem;
     height: 3rem;
     margin: 0 0.5rem;
 
-    border-radius: 50%;
-    border: 0.3rem solid nth($card-colors, 2);
-
     text-align: center;
     color: nth($card-colors, 3);
+
+    border: 0.25rem solid nth($card-colors, 2);
+    border-radius: 50%;
+
+    &:hover {
+        animation: blue-glow 2s ease-in-out infinite;
+    }
 
     > i {
         font-size: 1.5rem;
         padding-top: 0.75rem;
     }
-
-    &:hover {
-        animation: social-border-glow 2s ease-in-out infinite;
-    }    
 }
 
-.copyright {
+#copyright, .copyright {
+    font-weight: 500;
     white-space: nowrap;
 
     position: fixed;
-    left: 50%;
     bottom: 1rem;
+    left: 50%;
     transform: translateX(-50%);
 
     color: black;
 }
 
-@keyframes social-border-glow {
+@media only screen and (orientation: portrait) {
+    @include card-pt();
+    @include card-front-pt();
+    @include card-back-pt();
+    @include intro-pt();
+    @include port-pt();
+}
+
+@media only screen and (orientation: landscape) {
+    @include card-ls();
+    @include card-front-ls();
+    @include card-back-ls();
+    @include intro-ls();
+    @include port-ls();
+    @include line-ls();
+}
+
+@keyframes blue-glow {
     0% { border-color: nth($card-colors, 2); box-shadow: none; }
     50% { border-color: nth($card-colors, 3); box-shadow: 0 0 1rem 0.25rem nth($card-colors, 2), inset 0 0 1rem 0.25rem nth($card-colors, 2); }
     100% { border-color: nth($card-colors, 2); box-shadow: none; }
 }
+
+@keyframes pulsate {
+    from { transform: scale(1, 1); opacity: 1; }
+    to { transform: scale(1.5, 1.5); opacity: 0.0; }
+}
+
+@keyframes restart-animation {};
+
+// second child, portfolio, text align right not align (portrait, 300px)

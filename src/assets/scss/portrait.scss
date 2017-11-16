@@ -1,0 +1,71 @@
+@mixin card-pt() {
+    #card-front, #card-back {
+        grid-template: repeat(16, 1fr) / repeat(10, 1fr);
+    }
+}
+
+@mixin card-front-pt() {
+    #card-front {
+        grid-template-areas:
+        "... ... ... ... ... ... ... ... ... ..."
+        "... avt avt avt avt avt avt avt avt ..."
+        "... avt avt avt avt avt avt avt avt ..."
+        "... avt avt avt avt avt avt avt avt ..."
+        "... avt avt avt avt avt avt avt avt ..."
+        "... avt avt avt avt avt avt avt avt ..."
+        "... avt avt avt avt avt avt avt avt ..."
+        "... avt avt avt avt avt avt avt avt ..."
+        "... ... ... ... ... ... ... ... ... ..."
+        "int int int int int int int int int int"
+        "int int int int int int int int int int"
+        "... ... ... ... ... ... ... ... ... ..."
+        "con con con con con con con con con con"
+        "con con con con con con con con con con"
+        "con con con con con con con con con con"
+        "... ... ... ... ... ... ... ... ... ...";
+    }
+}
+
+@mixin card-back-pt() {
+    #card-back {
+        grid-template-areas:
+        "skl skl skl skl skl skl skl skl skl skl"
+        "skl skl skl skl skl skl skl skl skl skl"
+        "skl skl skl skl skl skl skl skl skl skl"
+        "skl skl skl skl skl skl skl skl skl skl"
+        "skl skl skl skl skl skl skl skl skl skl"
+        "skm skm skm skm skm skm skm skm skm skm"
+        "skm skm skm skm skm skm skm skm skm skm"
+        "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
+        "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
+        "prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt"
+        "... ... ... ... ... pmo pmo pmo pmo pmo";
+    }
+}
+
+@mixin intro-pt() {
+    #introduction {
+        background-color: nth($card-colors, 2);
+    }
+}
+
+@mixin port-pt() {
+    #portfolio {
+        > .portfolio-item {
+            height: 30%;
+
+            > .tech > i {
+                margin-left: 0.5rem;
+            }
+
+            > .links > a {
+                margin-right: 0.5rem;
+            }
+        }
+    }
+}

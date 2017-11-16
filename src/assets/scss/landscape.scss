@@ -1,0 +1,90 @@
+@mixin card-ls() {
+    #card-front, #card-back {
+        grid-template: repeat(10, 1fr) / repeat(16, 1fr);
+    }
+}
+
+@mixin card-front-ls() {
+    #card-front {
+        grid-template-areas:
+        "lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt lnt"
+        "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ..."
+        "... avt avt avt avt avt avt ... ... ... ... ... ... ... ... ..."
+        "... avt avt avt avt avt avt ... int int int int int int int int"
+        "... avt avt avt avt avt avt ... int int int int int int int int"
+        "... avt avt avt avt avt avt ... con con con con con con con con"
+        "... avt avt avt avt avt avt ... con con con con con con con con"
+        "... avt avt avt avt avt avt ... ... ... ... ... ... ... ... ..."
+        "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ..."
+        "lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb lnb";
+    }
+}
+
+@mixin card-back-ls() {
+    #card-back {
+        grid-template-areas:
+        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
+        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
+        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
+        "skl skl skl skl skl skl skl skl skm skm skm skm skm skm skm skm"
+        "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
+        "ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl ptl"
+        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
+        "prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt prt"
+        "... ... ... ... ... ... ... ... ... ... ... ... pmo pmo pmo pmo";
+    }
+}
+
+@mixin intro-ls() {
+    #introduction {
+        background-color: transparent;
+    }
+}
+
+@mixin port-ls() {
+    #portfolio {
+        flex-wrap: wrap;
+
+        > .portfolio-item {
+            height: 45%;
+            max-width: 50%;
+
+            > div.project-details {
+                > .tech > i {
+                    margin-left: 0.3rem;
+                }
+    
+                > .links > a {
+                    margin-right: 0.3rem;
+                }
+            }
+
+            &:nth-child(2) {
+                align-self: flex-end;
+                order: 2;
+            }
+
+            &:last-child {
+                order: 1;
+            }
+        }
+    }
+}
+
+@mixin line-ls() {
+    #line-top {
+        grid-area: lnt;
+
+        height: 100%;
+        background-color: nth($card-colors, 2);
+    }
+
+    #line-bottom {
+        grid-area: lnb;
+        align-self: end;
+        
+        height: 100%;
+        background-color: nth($card-colors, 2);
+    }
+}

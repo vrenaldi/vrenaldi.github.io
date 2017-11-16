@@ -2,11 +2,10 @@
 
 import "../scss/main.scss";
 import loadAvatar from "./avatar";
-import { initSkills, animateSkills, clearSVG, clearSkills } from "./skills";
 import loadPortfolio from "./portfolio";
 
 let container, links;
-export let orientation: string;
+let portImage, skillsCore;
 
 function main(): void {
     loadAvatar();
@@ -14,51 +13,34 @@ function main(): void {
 
     loadElements();
     loadListeners();
-
-    initSkills();
 }
 
 function loadElements(): void {
     container = document.getElementById("container");
     links = document.querySelectorAll("a");
-
-    if (window.innerWidth > window.innerHeight) { orientation = "landscape"; }
-    else { orientation = "portrait"; }
+    portImage = document.querySelectorAll(".portfolio-item > img");
+    skillsCore = document.getElementById("core");
 }
 
 function loadListeners(): void {
-    window.addEventListener("resize", winResize);
-    container.addEventListener("click", conClicked);
-    links.forEach(element => {
-        element.addEventListener("click", e => { e.stopPropagation(); });
-    });
+    container.addEventListener("click", () => { toggleClass(container, "flipped"); });
+    skillsCore.addEventListener("click", () => { toggleClass(skillsCore, "clicked"); });
+
+    links.forEach(element => { stopPropagation(element); });
+    portImage.forEach(element => { stopPropagation(element); });
+    stopPropagation(skillsCore);
 }
 
-function winResize(): void {
-    if (window.innerWidth > window.innerHeight && orientation != "landscape") {
-        orientation = "landscape";
-        reloadSkills();
-    }
-    else if (window.innerWidth < window.innerHeight && orientation != "portrait") {
-        orientation = "portrait";
-        reloadSkills();
-    }
-}
-
-function conClicked(): void {
-    if (!container.classList.contains("flipped")) {
-        container.classList.toggle("flipped", true);
-        animateSkills();
+function toggleClass(element: any, cssClass: string): void {
+    if (!element.classList.contains(cssClass)) {
+        element.classList.toggle(cssClass, true);
     } else {
-        container.classList.toggle("flipped", false);
-        clearSkills();
+        element.classList.toggle(cssClass, false);
     }
 }
 
-function reloadSkills(): void {
-    clearSVG();
-    initSkills();
-    animateSkills();
+function stopPropagation(element: any): void {
+    element.addEventListener("click", e => { e.stopPropagation(); });
 }
 
 main();
