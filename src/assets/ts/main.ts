@@ -5,7 +5,7 @@ import loadAvatar from "./avatar";
 import loadPortfolio from "./portfolio";
 
 let container, links;
-let portImage, skillsCore;
+let avatar, portImage, skillsCore;
 
 function main(): void {
     loadAvatar();
@@ -18,17 +18,27 @@ function main(): void {
 function loadElements(): void {
     container = document.getElementById("container");
     links = document.querySelectorAll("a");
+
+    avatar = document.getElementById("avatar");
     portImage = document.querySelectorAll(".portfolio-item > img");
     skillsCore = document.getElementById("core");
 }
 
 function loadListeners(): void {
+    container.addEventListener("click", conClicked);
+
     container.addEventListener("click", () => { toggleClass(container, "flipped"); });
     skillsCore.addEventListener("click", () => { toggleClass(skillsCore, "clicked"); });
 
     links.forEach(element => { stopPropagation(element); });
     portImage.forEach(element => { stopPropagation(element); });
     stopPropagation(skillsCore);
+}
+
+function conClicked(): void {
+    if (avatar.classList.contains("tooltip")) {
+        window.setTimeout(() => { avatar.classList.remove("tooltip"); }, 750);
+    }
 }
 
 function toggleClass(element: any, cssClass: string): void {

@@ -42,6 +42,39 @@
     }
 }
 
+@mixin skills-ls() {
+    #skills {
+        > #core, > #core-pulse {
+        width: 3.5rem;
+        height: 3.5rem;
+
+        top: calc(50% - 1.95rem);
+        left: calc(50% - 1.95rem);
+        }
+
+        > [id^=item] {
+            font-size: 2.5rem;
+            transform: translateY(1.5rem) translate(-50%, -50%);
+        }
+
+        > #core.clicked {
+            transform: translateY(1.5rem);
+
+            + #core-pulse {
+                + #item1 {
+                    transform: translateX(-3.75rem) translateY(1.5rem) translate(-50%, -50%);
+                    + #item2 {
+                        transform: translateX(3.75rem) translateY(1.5rem) translate(-50%, -50%);
+                        + #item3 {
+                            transform: translateY(-3.75rem) translateY(1.5rem) translate(-50%, -50%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @mixin port-ls() {
     #portfolio {
         flex-wrap: wrap;
