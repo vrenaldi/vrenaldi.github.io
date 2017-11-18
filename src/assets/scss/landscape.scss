@@ -80,8 +80,13 @@
         flex-wrap: wrap;
 
         > .portfolio-item {
-            height: 45%;
+            height: 40%;
             max-width: 50%;
+
+            img {
+                width: 3rem;
+                height: 3rem;
+            }
 
             > div.project-details {
                 > .tech > i {

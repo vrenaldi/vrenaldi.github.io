@@ -48,15 +48,27 @@ function drawEyes(): void {
 }
 
 function animate(timestamp?: number): void {
-    if (timestamp - startTime > 5000) {
+    if (timestamp - startTime > 3000) {
+        let mode: string = (Math.random() < 0.75) ? "once" : "twice";
+
         for (let key in customDrawings) {
             if (customDrawings.hasOwnProperty(key)) {
                 let element: SnapCircle | SnapEllipse = customDrawings[key];
 
                 if (!isSnapCircle(element)) {
-                    element.snapObj.animate({ ry: 0.1 }, 220, function () {
-                        element.snapObj.animate({ ry: (<SnapEllipse>element).height }, 300);
-                    });
+                    if (mode == "once") {
+                        element.snapObj.animate({ ry: 0.1 }, 220, () => {
+                            element.snapObj.animate({ ry: (<SnapEllipse>element).height }, 300);
+                        });
+                    } else {
+                        element.snapObj.animate({ ry: 0.1 }, 110, () => {
+                            element.snapObj.animate({ ry: (<SnapEllipse>element).height }, 150, () => {
+                                element.snapObj.animate({ ry: 0.1 }, 110, () => {
+                                    element.snapObj.animate({ ry: (<SnapEllipse>element).height }, 150);
+                                });
+                            });
+                        });
+                    }
                 }
             }
         }

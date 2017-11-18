@@ -283,10 +283,7 @@ body {
         align-content: center;
         align-items: center;
 
-        > img {
-            width: auto;
-            height: 100%;
-
+        img {
             margin: 0 0.5rem;
             border: 0.2rem solid nth($card-colors, 2);
             border-radius: 50%;
