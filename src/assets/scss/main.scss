@@ -7,7 +7,7 @@ $min-font-size: 5px;
 $max-font-size: 45px;
 
 $card-index: container, flipper, back, front;
-$card-colors: #212121, #2196F3, #F5F5F5;
+$card-colors: #212121, #3F51B5, #FFFFFF;
 $shadow-colors: #263238, #424242;
 $background-colors: #FFC107, rgba(245, 124, 0, 0.5);
 
@@ -262,7 +262,7 @@ body {
     text-transform: uppercase;
 
     color: nth($card-colors, 3);
-    border-top: 0.5rem solid nth($card-colors, 2);
+    border-top: 0.25rem solid nth($card-colors, 2);
 
     display: flex;
     flex-direction: column;
@@ -385,7 +385,7 @@ body {
         content: "";
         border-width: 0.6rem 0.5rem 0 0.5rem;
         border-style: solid;
-        border-color: #E57373 transparent transparent transparent;
+        border-color: #E91E63 transparent transparent transparent;
     }
 
     &::after {
@@ -395,7 +395,7 @@ body {
         padding: 0.2rem 0.3rem;
         border-radius: 0.2rem;
 
-        background-color: #E57373;
+        background-color: #E91E63;
         color: nth($card-colors, 3);
 
         transform: translate(-10%, -95%);

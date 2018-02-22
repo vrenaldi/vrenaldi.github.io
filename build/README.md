@@ -2,9 +2,13 @@
 
 [![License][license-badge]][license-badge-url]
 
-**My site.**
+**Welcome to my portfolio website.**
 
-Design (aspect ratio) is based on [ISO/IEC 7810], ID-1.
+The idea behind this website is a "live" business card.  
+On the front side of the card, you can see my contact.  
+When you flip (click) the card, you can see the skills and projects sections.
+
+The size of the card (aspect ratio) is based on [ISO/IEC 7810], ID-1.
 
 | Format               | Dimensions           |
 | -------------------- | -------------------- |
