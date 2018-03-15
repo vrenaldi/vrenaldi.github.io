@@ -1,5 +1,5 @@
-import * as transformations from "../images/transformations.jpg";
-import * as comingSoon from "../images/comingSoon.jpg";
+import * as transformations from "../assets/images/transformations.jpg";
+import * as comingSoon from "../assets/images/comingSoon.jpg";
 
 export default function loadPortfolio():void{
     let projects = document.querySelectorAll(".portfolio-item img");

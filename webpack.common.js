@@ -5,9 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const webpack = require('webpack');
 
 module.exports = {
-    entry: './src/assets/ts/main.ts',
+    entry: './src/ts/main.ts',
     output: {
-        filename: 'assets/js/bundle.js',
+        filename: 'js/bundle.js',
         path: path.resolve(__dirname, 'build')
     },
     module: {
@@ -40,7 +40,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['build']),
-        new ExtractTextPlugin('assets/css/main.css'),
+        new ExtractTextPlugin('css/main.css'),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/index.html'

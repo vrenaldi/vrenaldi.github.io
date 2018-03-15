@@ -54,5 +54,3 @@ function stopPropagation(element: any): void {
 }
 
 main();
-
-console.log("Hello world!! - vrenaldi");

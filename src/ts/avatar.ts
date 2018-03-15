@@ -1,5 +1,5 @@
 import * as Snap from "snapsvg/dist/snap.svg-min.js";
-import * as vrAvatar from "../images/VRAvatar.svg";
+import * as vrAvatar from "../assets/images/VRAvatar.svg";
 
 interface Drawing { snapObj: any; startX: number; startY: number; }
 interface SnapEllipse extends Drawing { width: number; height: number; }
