@@ -4,8 +4,10 @@ import "../scss/main.scss";
 import loadAvatar from "./avatar";
 import loadPortfolio from "./portfolio";
 
+let html;
 let container, links;
 let avatar, portImage, skillsCore;
+let containerStyle;
 
 function main(): void {
     loadAvatar();
@@ -13,9 +15,13 @@ function main(): void {
 
     loadElements();
     loadListeners();
+
+    loadStyles();
 }
 
 function loadElements(): void {
+    html = document.querySelector("html");
+
     container = document.getElementById("container");
     links = document.querySelectorAll("a");
 
@@ -33,6 +39,13 @@ function loadListeners(): void {
     links.forEach(element => { stopPropagation(element); });
     portImage.forEach(element => { stopPropagation(element); });
     stopPropagation(skillsCore);
+
+    window.addEventListener("load", setupFont);
+    window.addEventListener("resize", setupFont);
+}
+
+function loadStyles(): void {
+    containerStyle = window.getComputedStyle(container);
 }
 
 function conClicked(): void {
@@ -51,6 +64,13 @@ function toggleClass(element: any, cssClass: string): void {
 
 function stopPropagation(element: any): void {
     element.addEventListener("click", e => { e.stopPropagation(); });
+}
+
+function setupFont() {
+    let containerWidth: string = containerStyle.getPropertyValue("width").split("px")[0];
+
+    if (window.matchMedia("(orientation: portrait)").matches) { html.style.fontSize = `${(0.05 * +containerWidth)}px`; }
+    if (window.matchMedia("(orientation: landscape)").matches) { html.style.fontSize = `${(0.03 * +containerWidth)}px`; }
 }
 
 main();

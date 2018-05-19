@@ -4,17 +4,17 @@
 
 **Welcome to my portfolio website.**
 
-The idea behind this website is a "live" business card.  
-On the front side of the card, you can see my contact.  
-When you flip (click) the card, you can see the skills and projects sections.
+This project was built using HTML5, CSS3 (SCSS) and TypeScript.  
+The idea behind the project is a "live" business card.
+
+My contact information can be found on the front side of the card.  
+Flip (click) the card to see the skills and projects sections.
 
 The size of the card (aspect ratio) is based on [ISO/IEC 7810], ID-1.
 
 | Format               | Dimensions           |
 | -------------------- | -------------------- |
 | ID-1                 | 85.60 × 53.98 mm     |
-
-There might be still some breakdown when the aspect ratio is heavily violated, e.g. 1:1.
 
 [ISO/IEC 7810]: https://en.wikipedia.org/wiki/ISO/IEC_7810
 

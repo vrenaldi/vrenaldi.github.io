@@ -1,11 +1,6 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
 
-$min-vp: 20px;
-$max-vp: 1200px;
-$min-font-size: 5px;
-$max-font-size: 45px;
-
 $card-index: container, flipper, back, front;
 $card-colors: #212121, #3F51B5, #FFFFFF;
 $shadow-colors: #263238, #424242;
@@ -17,32 +12,6 @@ $background-colors: #FFC107, rgba(245, 124, 0, 0.5);
     }
 
     @return $value;
-}
-
-@mixin fluid-font-size($min-vp, $max-vp, $min-font-size, $max-font-size) {
-    $u1: unit($min-vp);
-    $u2: unit($max-vp);
-    $u3: unit($min-font-size);
-    $u4: unit($max-font-size);
-
-    @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
-        font-size: $min-font-size;
-        @media (min-width: $min-vp) {
-            font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((80vw - #{$min-vp}) / #{strip-unit($max-vp - $min-vp)}));
-        }
-        @media (min-width: $max-vp) {
-            font-size: $max-font-size;
-        }
-
-        @media only screen and (orientation: landscape) {
-            @media (min-height: $min-vp) {
-                font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((80vh - #{$min-vp}) / #{strip-unit($max-vp - $min-vp)}));
-            }
-            @media (min-height: $max-vp) {
-                font-size: $max-font-size;
-            }
-        }
-    }
 }
 
 @mixin setup-ratio($width, $height-max, $width-ratio, $height-ratio) {
@@ -61,7 +30,6 @@ $background-colors: #FFC107, rgba(245, 124, 0, 0.5);
 @import "./landscape.scss";
 
 html {
-    @include fluid-font-size($min-vp, $max-vp, $min-font-size, $max-font-size);
     font-family: monospace;
     font-family: Courier New, Courier;
     font-family: "Roboto Mono", Courier New, Courier, monospace;
@@ -435,3 +403,4 @@ body {
 @keyframes restart-animation {};
 
 // second child, portfolio, text align right not align (portrait, 300px)
+// http://jsfiddle.net/danield770/8VJ38/3/
