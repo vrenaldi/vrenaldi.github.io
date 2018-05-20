@@ -4,6 +4,11 @@ import "../scss/main.scss";
 import loadAvatar from "./avatar";
 import loadPortfolio from "./portfolio";
 
+import fontawesome from '@fortawesome/fontawesome';
+import * as faGithubAlt from '@fortawesome/fontawesome-free-brands/faGithubAlt';
+import * as faLinkedinIn from '@fortawesome/fontawesome-free-brands/faLinkedinIn';
+import * as faFacebookF from '@fortawesome/fontawesome-free-brands/faFacebookF';
+
 let html;
 let container, links;
 let avatar, portImage, skillsCore;
@@ -40,12 +45,15 @@ function loadListeners(): void {
     portImage.forEach(element => { stopPropagation(element); });
     stopPropagation(skillsCore);
 
-    window.addEventListener("load", setupFont);
+    window.addEventListener("DOMContentLoaded", setupFont);
     window.addEventListener("resize", setupFont);
+
+    window.addEventListener("load", () => { container.style.visibility = "visible"; });
 }
 
 function loadStyles(): void {
-    containerStyle = window.getComputedStyle(container);
+    containerStyle = window.getComputedStyle(container);    
+    fontawesome.library.add(faGithubAlt, faLinkedinIn, faFacebookF);
 }
 
 function conClicked(): void {
