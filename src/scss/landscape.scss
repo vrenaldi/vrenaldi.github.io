@@ -89,10 +89,12 @@
             }
 
             > div.project-details {
-                > .tech > i {
-                    margin-left: 0.3rem;
+                .link-area {
+                    > .tech > i {
+                        margin-left: 0.3rem;
+                    }
                 }
-    
+
                 > .links > a {
                     margin-right: 0.3rem;
                 }
